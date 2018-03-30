@@ -472,12 +472,12 @@ func projectGeneratorTests() {
                     postActions: [.init(name: "Run2", script: "post", settingsTarget: "MyApp")]
                 )
 
-                let spec = ProjectSpec(basePath: "", name: "test", targets: [target, framework])
-                let project = try getProject(spec)
+                let project = Project(basePath: "", name: "test", targets: [target, framework])
+                let xcodeProject = try getXcodeProject(project)
 
-                try expect(project.sharedData?.schemes.count) == 1
+                try expect(xcodeProject.sharedData?.schemes.count) == 1
 
-                guard let xcscheme = project.sharedData?.schemes.first else {
+                guard let xcscheme = xcodeProject.sharedData?.schemes.first else {
                     throw failure("Scheme not found")
                 }
 
